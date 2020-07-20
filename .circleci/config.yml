@@ -1,139 +1,138 @@
 version: 2
 jobs:
-    test-python36:
-        docker:
-            - image: python:3.6-alpine
-            - image: postgres:11.0
-              environment:
-                  POSTGRES_DB: 'psqlextra'
-                  POSTGRES_USER: 'psqlextra'
-                  POSTGRES_PASSWORD: 'psqlextra'
-        steps:
-            - checkout
-            - run:
-                name: Install packages
-                command: apk add postgresql-libs gcc musl-dev postgresql-dev git
+  test-python36:
+    docker:
+      - image: python:3.6-alpine
+      - image: postgres:11.0
+        environment:
+          POSTGRES_DB: "psqlextra"
+          POSTGRES_USER: "psqlextra"
+          POSTGRES_PASSWORD: "psqlextra"
+    steps:
+      - checkout
+      - run:
+          name: Install packages
+          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
 
-            - run:
-                name: Install Python packages
-                command: pip install --progress-bar off .[test]
+      - run:
+          name: Install Python packages
+          command: pip install --progress-bar off .[test]
 
-            - run:
-                name: Run tests
-                command: tox -e 'py36-dj{20,21,22,30}'
-                environment:
-                    DATABASE_URL: 'postgres://psqlextra:psqlextra@localhost:5432/psqlextra'
+      - run:
+          name: Run tests
+          command: tox -s
+          environment:
+            DATABASE_URL: "postgres://psqlextra:psqlextra@localhost:5432/psqlextra"
 
-    test-python37:
-        docker:
-            - image: python:3.7-alpine
-            - image: postgres:11.0
-              environment:
-                  POSTGRES_DB: 'psqlextra'
-                  POSTGRES_USER: 'psqlextra'
-                  POSTGRES_PASSWORD: 'psqlextra'
-        steps:
-            - checkout
-            - run:
-                name: Install packages
-                command: apk add postgresql-libs gcc musl-dev postgresql-dev git
+  test-python37:
+    docker:
+      - image: python:3.7-alpine
+      - image: postgres:11.0
+        environment:
+          POSTGRES_DB: "psqlextra"
+          POSTGRES_USER: "psqlextra"
+          POSTGRES_PASSWORD: "psqlextra"
+    steps:
+      - checkout
+      - run:
+          name: Install packages
+          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
 
-            - run:
-                name: Install Python packages
-                command: pip install --progress-bar off .[test]
+      - run:
+          name: Install Python packages
+          command: pip install --progress-bar off .[test]
 
-            - run:
-                name: Run tests
-                command: tox -e 'py37-dj{20,21,22,30}'
-                environment:
-                    DATABASE_URL: 'postgres://psqlextra:psqlextra@localhost:5432/psqlextra'
+      - run:
+          name: Run tests
+          command: tox -s
+          environment:
+            DATABASE_URL: "postgres://psqlextra:psqlextra@localhost:5432/psqlextra"
 
-    test-python38:
-        docker:
-            - image: python:3.8-alpine
-            - image: postgres:11.0
-              environment:
-                  POSTGRES_DB: 'psqlextra'
-                  POSTGRES_USER: 'psqlextra'
-                  POSTGRES_PASSWORD: 'psqlextra'
-        steps:
-            - checkout
-            - run:
-                name: Install packages
-                command: apk add postgresql-libs gcc musl-dev postgresql-dev git
+  test-python38:
+    docker:
+      - image: python:3.8-alpine
+      - image: postgres:11.0
+        environment:
+          POSTGRES_DB: "psqlextra"
+          POSTGRES_USER: "psqlextra"
+          POSTGRES_PASSWORD: "psqlextra"
+    steps:
+      - checkout
+      - run:
+          name: Install packages
+          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
 
-            - run:
-                name: Install Python packages
-                command: pip install --progress-bar off .[test]
+      - run:
+          name: Install Python packages
+          command: pip install --progress-bar off .[test]
 
-            - run:
-                name: Run tests
-                command: tox -e 'py38-dj{20,21,22,30}'
-                environment:
-                    DATABASE_URL: 'postgres://psqlextra:psqlextra@localhost:5432/psqlextra'
+      - run:
+          name: Run tests
+          command: tox -s
+          environment:
+            DATABASE_URL: "postgres://psqlextra:psqlextra@localhost:5432/psqlextra"
 
-            - store_test_results:
-                path: reports
+      - store_test_results:
+          path: reports
 
-            - run:
-                name: Upload coverage report
-                command: coveralls
+      - run:
+          name: Upload coverage report
+          command: coveralls
 
-    test-python39:
-        docker:
-            - image: python:3.9-rc-alpine3.10
-            - image: postgres:11.0
-              environment:
-                  POSTGRES_DB: 'psqlextra'
-                  POSTGRES_USER: 'psqlextra'
-                  POSTGRES_PASSWORD: 'psqlextra'
-        steps:
-            - checkout
-            - run:
-                name: Install packages
-                command: apk add postgresql-libs gcc musl-dev postgresql-dev git
+  test-python39:
+    docker:
+      - image: python:3.9-rc-alpine3.10
+      - image: postgres:11.0
+        environment:
+          POSTGRES_DB: "psqlextra"
+          POSTGRES_USER: "psqlextra"
+          POSTGRES_PASSWORD: "psqlextra"
+    steps:
+      - checkout
+      - run:
+          name: Install packages
+          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
 
-            - run:
-                name: Install Python packages
-                command: pip install --progress-bar off .[test]
+      - run:
+          name: Install Python packages
+          command: pip install --progress-bar off .[test]
 
-            - run:
-                name: Run tests
-                command: tox -e 'py39-dj{21,22,30}'
-                environment:
-                    DATABASE_URL: 'postgres://psqlextra:psqlextra@localhost:5432/psqlextra'
+      - run:
+          name: Run tests
+          command: tox -s
+          environment:
+            DATABASE_URL: "postgres://psqlextra:psqlextra@localhost:5432/psqlextra"
 
-            - store_test_results:
-                path: reports
+      - store_test_results:
+          path: reports
 
-            - run:
-                name: Upload coverage report
-                command: coveralls
+      - run:
+          name: Upload coverage report
+          command: coveralls
 
-    analysis:
-        docker:
-            - image: python:3.7-alpine
-        steps:
-            - checkout
-            - run:
-                name: Install packages
-                command: apk add postgresql-libs gcc musl-dev postgresql-dev git
+  analysis:
+    docker:
+      - image: python:3.7-alpine
+    steps:
+      - checkout
+      - run:
+          name: Install packages
+          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
 
-            - run:
-                name: Install Python packages
-                command: pip install .[analysis]
+      - run:
+          name: Install Python packages
+          command: pip install .[analysis]
 
-            - run:
-                name: Verify
-                command: python setup.py verify
-
+      - run:
+          name: Verify
+          command: python setup.py verify
 
 workflows:
-    version: 2
-    build:
-        jobs:
-            - test-python36
-            - test-python37
-            - test-python38
-            - test-python39
-            - analysis
+  version: 2
+  build:
+    jobs:
+      - test-python36
+      - test-python37
+      - test-python38
+      - test-python39
+      - analysis
