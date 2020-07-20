@@ -2,7 +2,7 @@ version: 2
 jobs:
   test-python36:
     docker:
-      - image: python:3.6-alpine
+      - image: python:3.6
       - image: postgres:11.0
         environment:
           POSTGRES_DB: "psqlextra"
@@ -10,10 +10,6 @@ jobs:
           POSTGRES_PASSWORD: "psqlextra"
     steps:
       - checkout
-      - run:
-          name: Install packages
-          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
-
       - run:
           name: Install Python packages
           command: pip install --progress-bar off .[test]
@@ -26,7 +22,7 @@ jobs:
 
   test-python37:
     docker:
-      - image: python:3.7-alpine
+      - image: python:3.7
       - image: postgres:11.0
         environment:
           POSTGRES_DB: "psqlextra"
@@ -34,10 +30,6 @@ jobs:
           POSTGRES_PASSWORD: "psqlextra"
     steps:
       - checkout
-      - run:
-          name: Install packages
-          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
-
       - run:
           name: Install Python packages
           command: pip install --progress-bar off .[test]
@@ -50,7 +42,7 @@ jobs:
 
   test-python38:
     docker:
-      - image: python:3.8-alpine
+      - image: python:3.8
       - image: postgres:11.0
         environment:
           POSTGRES_DB: "psqlextra"
@@ -58,10 +50,6 @@ jobs:
           POSTGRES_PASSWORD: "psqlextra"
     steps:
       - checkout
-      - run:
-          name: Install packages
-          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
-
       - run:
           name: Install Python packages
           command: pip install --progress-bar off .[test]
@@ -81,7 +69,7 @@ jobs:
 
   test-python39:
     docker:
-      - image: python:3.9-rc-alpine3.10
+      - image: python:3.9-rc
       - image: postgres:11.0
         environment:
           POSTGRES_DB: "psqlextra"
@@ -89,10 +77,6 @@ jobs:
           POSTGRES_PASSWORD: "psqlextra"
     steps:
       - checkout
-      - run:
-          name: Install packages
-          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
-
       - run:
           name: Install Python packages
           command: pip install --progress-bar off .[test]
@@ -112,13 +96,9 @@ jobs:
 
   analysis:
     docker:
-      - image: python:3.7-alpine
+      - image: python:3.7
     steps:
       - checkout
-      - run:
-          name: Install packages
-          command: apk add postgresql-libs gcc musl-dev postgresql-dev git
-
       - run:
           name: Install Python packages
           command: pip install .[analysis]

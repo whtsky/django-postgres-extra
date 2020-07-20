@@ -5,19 +5,6 @@ SQL = str
 SQLWithParams = Tuple[str, Union[Tuple[Any, ...], Dict[str, Any]]]
 
 
-class StrEnum(str, Enum):
-    @classmethod
-    def all(cls) -> List["PostgresPartitioningMethod"]:
-        return [choice for choice in cls]
-
-    @classmethod
-    def values(cls) -> List[str]:
-        return [choice.value for choice in cls]
-
-    def __str__(self) -> str:
-        return str(self.value)
-
-
 class ConflictAction(Enum):
     """Possible actions to take on a conflict."""
 
@@ -29,9 +16,20 @@ class ConflictAction(Enum):
         return [choice for choice in cls]
 
 
-class PostgresPartitioningMethod(StrEnum):
+class PostgresPartitioningMethod(str, Enum):
     """Methods of partitioning supported by PostgreSQL 11.x native support for
     table partitioning."""
 
     RANGE = "range"
     LIST = "list"
+
+    @classmethod
+    def all(cls) -> List["PostgresPartitioningMethod"]:
+        return [choice for choice in cls]
+
+    @classmethod
+    def values(cls) -> List[str]:
+        return [choice.value for choice in cls]
+
+    def __str__(self) -> str:
+        return str(self.value)
